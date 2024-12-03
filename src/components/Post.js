@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { db } from '../firebase';
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
 const Post = ({postObj, isOwener})=>{
     const [edit, setEdit] = useState(false);
@@ -11,6 +11,9 @@ const Post = ({postObj, isOwener})=>{
         const yes = window.confirm("정말 삭제할까요?");
         if(yes){
             await deleteDoc(doc(db, "posts", postObj.id));
+            const storage = getStorage();
+            const storageRef = ref(storage, postObj.attachmentUrl);
+            deleteObject(storageRef);
         }
     }
 
@@ -44,6 +47,10 @@ const Post = ({postObj, isOwener})=>{
                 ) : (
                     <>
                         <h4>{postObj.content}</h4>
+                        <h5>- {postObj.name} -</h5>
+                        {
+                            postObj.attachmentUrl && <img src={postObj.attachmentUrl} width="100px" alt=""/>
+                        }
                         {
                         isOwener && (
                             <>
