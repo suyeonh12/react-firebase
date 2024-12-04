@@ -2,6 +2,10 @@ body{
   padding: 20px;
 }
 
+h1,h2,h3,h4,h5,h6{
+  margin: 10px 0;
+}
+
 ul{
   list-style: none;
 }
@@ -29,6 +33,10 @@ nav ul li a{
   padding: 10px;
   background: #ebebeb;
   border-radius: 5px;
+}
+
+.postlist button{
+  margin-left: 10px;
 }
 
 .profile img{

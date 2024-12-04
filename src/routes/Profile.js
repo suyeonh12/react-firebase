@@ -33,8 +33,14 @@ const Profile = ()=>{
             setPosts(postArr);
         });         
     }
-    useEffect(()=>{
+    /*useEffect(()=>{
         user.photoURL.includes('firebase') && setProfileImg(user.photoURL);
+        getUserPost();
+    },[])*/
+    useEffect(()=>{
+        if (user && user.photoURL && user.photoURL.includes('firebase')) {
+            setProfileImg(user.photoURL);
+        }
         getUserPost();
     },[])
     console.log(posts);
@@ -58,7 +64,7 @@ const Profile = ()=>{
             <div className="profile">
                 <div>
                     <img src={profileImg} alt="logo" />
-                    <h3>{user.displayName}</h3>
+                    <h3>{user.displayName ?? ""}</h3>
                 </div>
                 <input type="file" className="hidden" accept="image/*" id="profile" onChange={updateLogo} />
                 <label htmlFor="profile">Update profile</label>

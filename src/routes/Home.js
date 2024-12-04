@@ -82,15 +82,21 @@ const Home = ({userObj}) => {
         //const thefile = e.target.files[0]
         const {target:{files}} = e;
         const theFile = files[0];
-        const reader = new FileReader();
-        reader.onloadend = (e)=>{
-            //console.log(e);
-            const {target:{result}} = e;
-            setAttachment(result);
+        console.log(theFile);
+        if(theFile.size > 2*1024*1024){
+            alert('2MB 이상 이미지는 업로드할 수 없습니다.');
+            myform.reset();
+        }else{
+            const reader = new FileReader();
+            reader.onloadend = (e)=>{
+                //console.log(e);
+                const {target:{result}} = e;
+                setAttachment(result);
+            }
+            reader.readAsDataURL(theFile);
         }
-        reader.readAsDataURL(theFile);
     }
-    console.log(attachment);
+    //console.log(attachment);
     const onClearFile = () =>{
         setAttachment(null);
     }
